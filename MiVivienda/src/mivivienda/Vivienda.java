@@ -66,7 +66,6 @@ public class Vivienda {
                 break;
             default:
                 this.calificacion = 'G';
-                break;
             
         }
     }
