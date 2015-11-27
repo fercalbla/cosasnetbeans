@@ -10,6 +10,7 @@ package mismoviles;
  * @author fer
  */
 public class Movil {
+    //Variables para el movil
     private String brand = "Default";
     private String model = "Default";
     private String sys = "Android";
@@ -18,6 +19,22 @@ public class Movil {
     private int ram = 1;
     private double screen = 4.0;
     private String status = "off";
+    
+    //Constructor vacio
+    public Movil(){
+        System.out.println("Variables por defecto asignadas.");
+    }
+    
+    //Constructor con todas las variables
+    public Movil(String brand, String model, String sys, double version, String cpu, int ram, double screen){
+        setBrand(brand);
+        setModel(model);
+        setSys(sys);
+        setVersion(version);
+        setCpu(cpu);
+        setRam(ram);
+        setScreen(screen);
+    }
     
     //Getters & Setters
     public void setBrand(String brand){
@@ -45,7 +62,11 @@ public class Movil {
     }
     
     public void setVersion(double version){
-        this.version = version;
+        if(version > 1.0){
+            this.version = version;
+        }else{
+            System.err.println("El valor introducido en el campo \"screen\" no es valido. Se ha asignado el valor por defecto."); 
+        }
     }
     
     public double getVersion(){
@@ -61,7 +82,11 @@ public class Movil {
     }
     
     public void setRam(int ram){
-        this.ram = ram;
+        if(ram > 0){
+           this.ram = ram; 
+        }else{
+            System.err.println("El valor introducido en el campo \"ram\" no es valido. Se ha asignado el valor por defecto."); 
+        } 
     }
     
     public int getRam(){
@@ -69,49 +94,71 @@ public class Movil {
     }
     
     public void setScreen(double screen){
-        this.screen = screen;
+        if(screen > 1.0){
+            this.screen = screen;
+        }else{
+            System.err.println("El valor introducido en el campo \"screen\" no es valido. Se ha asignado el valor por defecto."); 
+        }
     }
     
     public double getScreen(){
         return screen;
     }
+    
+    public void setStatus(String status){
+        this.status = status;
+    }
+    
+    public String getStatus(){
+        return status;
+    }
 
-    //Funciones para el movil
+    //Metodos para manejar el movil
+    //Funcion para encender el movil: Deteccion de estado, tiene varios modos para funcionar asignados por el parametro que
+    //le demos a la funcion.
     public void init(String mode){
-        if(status.equals("off")){
-            status = "on";
+        if(getStatus().equals("off")){
             switch(mode){
-                case "reboot":
+                case "reboot": 
                 System.out.println("Sistema reiniciado con exito.");
                 System.out.println("Bienvenido.");
-                
+                setStatus("on");
+                break;
+                case "kernel":
+                System.out.println("Kernel mode");
+                System.out.println("Info: " + brand + " " + model + " | " + sys + " " + version);
+                setStatus("kernel");
                 break;
                 default:
                 System.out.println("Bienvenido.");
+                setStatus("on");
             }
         }else{
-            System.out.println("El sistema ya está en funcionamiento.");
+            System.err.println("El sistema ya está en funcionamiento.");
         }
     }
     
+    //Metodo para el apagado: Deteccion de estado. Simplemente apaga el sistema usando un setter de estado y lanzando algunos souts
     public void shutdown(){
-        if(status.equals("on")){
-            status = "off";
-            System.out.println("Cerrando sesion...");
+        if(getStatus().equals("on") || getStatus().equals("kernel")){
+            setStatus("off");
             System.out.println("Apagando...");
             System.out.println("");
+        }else{
+            System.err.println("No puedes apagar un equipo que ni está encendido.");
         }
     }
     
+    //Metodo para el reinicio: Deteccion de estado. Reinicia el movil dando orden al encendido de si debe ser en modo reinicio 
+    //o modo kernel a traves del parametro.
     public void reboot(String mode){
         mode = mode.toLowerCase();
-        if(status.equals("on")){
+        if(getStatus().equals("on") || getStatus().equals("kernel")){
             switch(mode){
                 case "kernel":
                     System.out.println("Reiniciando al kernel...");
-                    System.out.println("Kernel mode");
-                    System.out.println("Info: " + brand + " " + model + " | " + sys + " " + version);
-                    status = "kernel";
+                    shutdown();
+                    init("kernel");
                     break;
                 default:
                     System.out.println("Reiniciando...");
@@ -120,56 +167,56 @@ public class Movil {
             }
             
         }else{
-            System.out.println("No puedes reiniciar un aparato apagado.");
+            System.err.println("No puedes reiniciar un dispositivo apagado.");
         }
     }
     
-    /*public void restore(){
-        if(isOn == true){
-            
-        }
-    }*/
-    
+    //Metodo para actualizar: Deteccion de estado para saber si puede actualizar o no. Reinicia el sistema una vez termindos.
+    //Tiene algunos souts de decoracion.
     public void update(String sys, double version){
-        if(status.equals("on")){
+        if(status.equals("kernel")){
             if (checkSys(sys, version)) {
                 System.out.println("Actualizando sistema...");
-                reboot("kernel");
                 System.out.println("cp -rf /tmp/updates/" + version + "/system");
                 setVersion(version);
                 reboot("reboot");
             }else{
-                System.out.println("El sistema ya está actualizado a la ultima versión.");
+                System.err.println("Error al actualizar.");
+                System.err.println("El sistema ya está actualizado a la ultima versión.");
+                reboot("reboot");
             }
             
         }else{
-            System.out.println("No se puede actualizar un sistema apagado.");
+            System.err.println("El dispositivo no se encuentra en modo kernel.");
         }
     }
     
+    
+    //Metodo para chequear versiones y SO: Se usa para permitir al sistema actualizarse o no. Compara el sistema operativo con el del
+    //del dispositivo y comprueba si la version a actualizar es superior.
     private boolean checkSys(String sys, double version){
-        boolean pass = false;
-        
         if (getVersion() < version && getSys().equals(sys)) {
-            pass = true;
+            return true;
+        }else{
+            return false;
         }
-        return pass;
     }
     
+    //Metodo para obtener toda la informacion del sistema: Si el dispositivo esta apagado no funciona.
     public void deviceInfo(){
         if(status.equals("on")){
             System.out.println("Información del dispositivo:");
             System.out.println("Marca: " + brand);
             System.out.println("Modelo: " + model);
             System.out.println("CPU: " + cpu);
-            System.out.println("RAM: " + ram);
+            System.out.println("RAM: " + ram + "GB");
             System.out.println("Tamaño de pantalla: " + screen + " pulgadas");
         
             System.out.println("\nInformación del sistema:");
             System.out.println("S.O.: " + sys);
             System.out.println("Version: " + version);
         }else{
-            System.out.println("El sistema está apagado.");
+            System.err.println("El dispositivo está apagado.");
         }
         
     }
