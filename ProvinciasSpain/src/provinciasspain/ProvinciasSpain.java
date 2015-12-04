@@ -28,6 +28,14 @@ public class ProvinciasSpain {
                 System.out.println(states[i]);
             }
         }
+        
+        //NO FUNCIONA
+        /*for (int i = 0; i < states.length; i++) {
+            states[i] = states[i].toLowerCase();
+            if (i > Arrays.binarySearch(states, states.equals("sevilla")) && i < Arrays.binarySearch(states, states.equals("cadiz"))) {
+                System.out.println(states[i]);
+            }
+        }*/
     }
 
     static int findPos(String[] states, String city) {
