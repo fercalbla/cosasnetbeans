@@ -9,13 +9,10 @@ package funcionesstring;
  *
  * @author fer
  */
-public class ComprobarDNI {
-    public static boolean checkDni(String dni){
-        String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
-        int operar = Integer.parseInt(dni.substring(0, (dni.length() - 1)));
-        int operacion = letras.charAt(operar%23);
+public class ComprobarMail {
+    public static boolean checkMail(String mail){
         boolean isValid = false;
-        if(dni.charAt(8) == operacion){
+        if(mail.endsWith("@gmail.com") || mail.endsWith("@yahoo.com") || mail.endsWith("@hotmail.com") || mail.endsWith("@hotmail.es")){
             isValid = true;
         }
         return isValid;

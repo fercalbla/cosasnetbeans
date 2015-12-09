@@ -8,10 +8,11 @@
 * 1. Crear una clase a la cual le vamos a pasar un DNI y nos debe retornar si la letra corresponde a ese DNI.
 * 2. Crear una clase que compruebe un formato de correo electronico.
 * 3. Crear una clase que independientemente de la forma de entrada de datos lo convierta todo en mayusculas.
+* 4. 
 */
 package misstrings;
 
-import funcionesstring.ComprobarDNI;
+import funcionesstring.*;
 
 /**
  *
@@ -23,7 +24,13 @@ public class MisStrings {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ComprobarDNI.checkDni("77820575Y");
+        String ternaria = ComprobarDNI.checkDni("77820575Y") ? "Es correcto":"Es incorrecto";
+        System.out.println(ternaria);
+        
+        String ternaria2 = ComprobarMail.checkMail("fercalbla@gmail.com") ? "Es correcto":"Es incorrecto";
+        System.out.println(ternaria2);
+        
+        
     }
     
 }
