@@ -27,9 +27,9 @@ public class LanzadorDeExcepciones {
         catch(ArrayIndexOutOfBoundsException excepcion){
             System.out.println("ERROR GENERADO: " + excepcion);
             
-            for (int i = 0; i <= numericos.length - 1; i++) {
+            /*for (int i = 0; i <= numericos.length - 1; i++) {
                 System.out.println(numericos[i]);
-            }
+            }*/
         }
         
         finally{
@@ -45,11 +45,11 @@ public class LanzadorDeExcepciones {
         }
         catch(ClassCastException excepcion){
             System.out.println("ERROR GENERADO: " + excepcion);
-            ArrayList lst = new ArrayList();
+            /*ArrayList lst = new ArrayList();
             lst.add("25");
             String num2 = (String) lst.get(0);
             Integer num = (Integer) Integer.parseInt(num2); 
-            System.out.println(num);
+            System.out.println(num);*/
         }
         
         finally{
@@ -57,27 +57,47 @@ public class LanzadorDeExcepciones {
         }
     }
     
-    public void illegalArgument(){
+    /*public void illegalArgument(){
         try{
-            Ejemplo miEjemplo = new Ejemplo("Hola", "Numero");
+            String var = "Numero";
+            Ejemplo miEjemplo = new Ejemplo("Hola", var);
         }
         
         catch(IllegalArgumentException excepcion){
             Ejemplo mi2Ejemplo = new Ejemplo("Hola", 1);
         }
-    }
+    }*/
     
+    static String cadena;
+    String[] miarray;
     public void nullPointer(){
         try{
-            String cadena;
-            for (int i=0; i < args.length; i++){
-                cadena+=args[i];
+            for (int i=0; i < miarray.length; i++){
+                cadena += miarray[i];
             }
             System.out.println("Long. total: " + cadena.length());
         }
         
         catch(NullPointerException excepcion){
+            System.out.println("ERROR GENERADO: " + excepcion);
+        }
+    }
+    
+    public void numberFormat(){
+        try{
+            String cadena="53g";
             
+            int k = Integer.parseInt(cadena);
+        }
+        
+        catch(NumberFormatException excepcion){
+            System.out.println("ERROR GENERADO: " + excepcion);
+            
+           /* String cadena="53";
+            
+            int k = Integer.parseInt(cadena);
+            
+            System.out.println(k);*/
         }
     }
 }

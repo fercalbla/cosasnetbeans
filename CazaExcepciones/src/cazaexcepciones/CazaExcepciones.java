@@ -23,27 +23,38 @@ public class CazaExcepciones {
         LanzadorDeExcepciones excep = new LanzadorDeExcepciones();
         
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Elige un numero para lanzar una excepcion: 1. ArrayIndexOutOfBoundsException, 2. ClassCastException, 3. IllegalArgumentException, 4. NullPointerException, 5. NumberFormatException");
-        String option = entrada.readLine();
-        switch(option){
-            case "1":
-                excep.outOfBounds();
-                break;
-            case "2":
-                excep.classCast();
-                break;
-            case "3":
-                excep.illegalArgument();
-                break;
-            case "4":
-                excep.nullPointer();
-                break;
-            case "5":
-                
-                break;
-            default:
-                System.out.println("Opcion incorrecta, vuelve a intentarlo.");
-        }
+        //String option = entrada.readLine();
+        boolean ready = false;
+        do{
+            System.out.println("Elige un numero para lanzar una excepcion: 1. ArrayIndexOutOfBoundsException, 2. ClassCastException, 3. IllegalArgumentException\n 4. NullPointerException, 5. NumberFormatException");
+            String option = entrada.readLine();
+            switch(option){
+                case "1":
+                    excep.outOfBounds();
+                    continue;
+                case "2":
+                    excep.classCast();
+                    continue;
+                case "3":
+                    //excep.illegalArgument();
+                    System.out.println("Esta opcion no está disponible.");
+                    continue;
+                case "4":
+                    excep.nullPointer();
+                    continue;
+                case "5":
+                    excep.numberFormat();
+                    continue;
+                case "salir":
+                    System.out.println("Adios.");
+                    ready = true;
+                    continue;
+                default:
+                    System.out.println("Opcion incorrecta, vuelve a intentarlo.");
+                    continue;
+            }  
+        }while(ready == false);
+        
     }
     
 }

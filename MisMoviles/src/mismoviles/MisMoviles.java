@@ -49,7 +49,7 @@ public class MisMoviles {
         mobile2.setScreen(4.7);*/
         
         //Cosas a hacer
-        Boolean progFuncionando = true;
+        boolean progFuncionando = true;
         do{
             System.out.println("¿Qué móvil quieres manejar? -> 1 o 2 \nSi quieres dejar de usar el programa escribe salir.");
             String option = entrada.readLine();
