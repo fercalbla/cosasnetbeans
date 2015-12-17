@@ -21,14 +21,14 @@ public class CazaExcepciones {
      */
     public static void main(String[] args) throws IOException {
         LanzadorDeExcepciones excep = new LanzadorDeExcepciones();
-        
+
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         //String option = entrada.readLine();
         boolean ready = false;
-        do{
-            System.out.println("Elige un numero para lanzar una excepcion: 1. ArrayIndexOutOfBoundsException, 2. ClassCastException, 3. IllegalArgumentException\n 4. NullPointerException, 5. NumberFormatException");
+        do {
+            System.out.println("Elige un numero para lanzar una excepcion: \n1. ArrayIndexOutOfBoundsException\n2. ClassCastException\n3. IllegalArgumentException\n4. NullPointerException\n5. NumberFormatException\nsalir. Para salir del programa.");
             String option = entrada.readLine();
-            switch(option){
+            switch (option) {
                 case "1":
                     excep.outOfBounds();
                     continue;
@@ -52,9 +52,9 @@ public class CazaExcepciones {
                 default:
                     System.out.println("Opcion incorrecta, vuelve a intentarlo.");
                     continue;
-            }  
-        }while(ready == false);
-        
+            }
+        } while (ready == false);
+
     }
-    
+
 }
